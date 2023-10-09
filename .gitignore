@@ -1,1 +1,5 @@
+# VSCode workspaces
 *.code-workspace
+
+# XML files in the Python directory (as these contain listings)
+python/*.xml
