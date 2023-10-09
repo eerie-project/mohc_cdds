@@ -1,0 +1,37 @@
+{
+    "atmos_timestep":"1200",
+    "branch_method":"no parent",
+    "calendar":"gregorian",
+    "child_base_date":"1850-01-01T00:00:00",
+    "config_version":"1.0.1",
+    "experiment_id":"eerie-piControl",
+    "external_plugin":"",
+    "external_plugin_location":"",
+    "global_attributes":{},
+    "institution_id":"MOHC",
+    "license":"EERIE data produced by MOHC is licensed under the Open Government License v3 (https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)",
+    "mass_data_class":"crum",
+    "mip":"EERIE",
+    "mip_era":"EERIE",
+    "mip_table_dir":"/home/h04/jseddon/eerie/dreq_tools/Tables",
+    "model_id":"HadGEM3-GC5-EERIE-N96-ORCA1",
+    "model_type":"AOGCM AER",
+    "package":"round-1",
+    "request_id":"eerie_n96_orca1",
+    "run_bounds":"1851-01-01T00:00:00 2081-01-01T00:00:00",
+    "run_bounds_for_stream_ap1":"1851-01-01T00:00:00 2081-01-01T00:00:00",
+    "run_bounds_for_stream_apm":"1851-01-01T00:00:00 2081-01-01T00:00:00",
+    "run_bounds_for_stream_apd":"1851-01-01T00:00:00 2081-01-01T00:00:00",
+    "run_bounds_for_stream_apa":"1851-01-01T00:00:00 2081-01-01T00:00:00",
+    "run_bounds_for_stream_ape":"1851-01-01T00:00:00 2081-01-01T00:00:00",
+    "run_bounds_for_stream_apf":"1851-01-01T00:00:00 2081-01-01T00:00:00",
+    "run_bounds_for_stream_ap6":"1851-01-01T00:00:00 2081-01-01T00:00:00",
+    "sub_experiment_id":"none",
+    "suite_branch":"trunk",
+    "suite_id":"u-cy163",
+    "suite_revision":"not used except with data request",
+    "variant_label":"r1i1p1f1"
+  }
+  
+  
+  
