@@ -24,11 +24,12 @@ def run_command(command):
     """
     cmd_out = None
     try:
-        cmd_out = check_output(command, stderr=STDOUT,
-                               shell=True).decode('utf-8')
+        cmd_out = check_output(command, stderr=STDOUT, shell=True).decode("utf-8")
     except CalledProcessError as exc:
-        msg = ("Command did not complete sucessfully.\ncommand:\n{}\n"
-               "produced error:\n{}".format(command, exc.output))
+        msg = (
+            "Command did not complete sucessfully.\ncommand:\n{}\n"
+            "produced error:\n{}".format(command, exc.output)
+        )
         raise RuntimeError(msg)
 
     if isinstance(cmd_out, str):
@@ -58,9 +59,9 @@ def parse_args():
     """
     parser = argparse.ArgumentParser(description="Extract CMORised files")
     parser.add_argument(
-        "yaml_file", 
+        "yaml_file",
         action="store",
-        help="The YAML configuration file to control extraction"
+        help="The YAML configuration file to control extraction",
     )
     args = parser.parse_args()
 
@@ -84,9 +85,11 @@ def main(args):
         if uri.match("*.nc"):
             # This is a file rather than directory
             print(uri)
-            mass_root = PurePosixPath(config["OUTPUT_MASS_ROOT"]).joinpath(PurePosixPath(config["OUTPUT_MASS_SUFFIX"]))
+            mass_root = PurePosixPath(config["OUTPUT_MASS_ROOT"]).joinpath(
+                PurePosixPath(config["OUTPUT_MASS_SUFFIX"])
+            )
             drs = uri.relative_to(mass_root)
-            drs_corrected  = cdds_to_drs_path(drs)
+            drs_corrected = cdds_to_drs_path(drs)
             dest_path = Path(config["gws_root"]).joinpath(drs_corrected)
             dest_dir = dest_path.parent
             if not dest_dir.exists():
@@ -94,7 +97,6 @@ def main(args):
             print(dest_path)
             print(f"moo get -n {uri} {dest_path}")
             print()
-
 
 
 if __name__ == "__main__":
