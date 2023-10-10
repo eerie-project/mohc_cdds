@@ -4,5 +4,8 @@
 # VI files
 *.swp
 
+# Python
+__pycache__
+
 # XML files in the Python directory (as these contain listings)
 python/*.xml
