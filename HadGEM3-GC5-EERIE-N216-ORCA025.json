@@ -17,7 +17,7 @@
     "model_id":"HadGEM3-GC5-EERIE-N216-ORCA025",
     "model_type":"AOGCM AER",
     "package":"round-1",
-    "request_id":"cmorise_n216_orca1",
+    "request_id":"cmorise_n216_orca025",
     "run_bounds":"1851-01-01T00:00:00 1981-01-01T00:00:00",
     "run_bounds_for_stream_ap1":"1851-01-01T00:00:00 1981-01-01T00:00:00",
     "run_bounds_for_stream_apm":"1851-01-01T00:00:00 1981-01-01T00:00:00",
