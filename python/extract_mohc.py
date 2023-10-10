@@ -95,7 +95,7 @@ def main(args):
             if not dest_dir.exists():
                 dest_dir.mkdir(parents=True)
             print(dest_path)
-            run_command(f"moo get {uri} {dest_path}")
+            run_command(f"moo get -L MetOffice_data_licence {uri} {dest_path}")
             print()
 
 
