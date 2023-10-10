@@ -1,0 +1,4 @@
+gws_root: /gws/nopw/j04/eerie/public/data
+OUTPUT_MASS_ROOT: moose:/adhoc/users/ghrm/EERIE/cdds/
+OUTPUT_MASS_SUFFIX: n96-orca1-picontrol-round-1 
+xml_file: HadGEM3-GC5-EERIE-N96-ORCA1-piControl-round-1.xml

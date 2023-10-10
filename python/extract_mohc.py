@@ -1,4 +1,4 @@
-#!/usr/bin/env /apps/jasmin/jaspy/miniconda_envs/jaspy3.10/m3-4.9.2/envs/jaspy3.10-m3-4.9.2-r20220721/bin/python
+#!/usr/bin/env python3
 """
 extract_mohc.py
 
@@ -6,8 +6,11 @@ Extract CMORised files from the MASS tape archive and store them in a DRS
 directory structure.
 """
 import argparse
+from pathlib import Path, PurePosixPath
 from subprocess import check_output, CalledProcessError, STDOUT
 from xml.etree import ElementTree
+
+import yaml
 
 
 def run_command(command):
@@ -34,16 +37,19 @@ def run_command(command):
         return None
 
 
-def to_drs(uri):
+def cdds_to_drs_path(uri):
     """
-    Take the MASS URI specfied and return the DRS path. This removes the     
-    additional directory level that was added by the CDDS.
+    Take a relative path in the CDDS directory structure and convert this to
+    a DRS directory structure, i.e. remove the 'embargoed' directory.
 
-    :param str uri: The MASS URI where the file currently is.
-    :returns: The DRS path of the file.
-    :rtype: str
+    >>> cdds_to_drs_path(PurePosixPath("mip_era", "activity_id", "institution_id", "source_id", "experiment_id", "member_id", "table_id", "variable_id", "grid_label", "embargoed", "version", "filename.nc"))
+    PurePosixPath('mip_era/activity_id/institution_id/source_id/experiment_id/member_id/table_id/variable_id/grid_label/version/filename.nc')
+
+    :param pathlib.PurePosixPath uri: The CDDS relative path
+    :returns: The equivalent DRS path
+    :rtype: pathlib.PurePosixPath
     """
-
+    return PurePosixPath("").joinpath(*uri.parts[:9], *uri.parts[-2:])
 
 
 def parse_args():
@@ -51,8 +57,11 @@ def parse_args():
     Parse command-line arguments
     """
     parser = argparse.ArgumentParser(description="Extract CMORised files")
-    parser.add_argument("XML_file", action="store",
-                        help="The XML file listing to restore")
+    parser.add_argument(
+        "yaml_file", 
+        action="store",
+        help="The YAML configuration file to control extraction"
+    )
     args = parser.parse_args()
 
     return args
@@ -62,15 +71,30 @@ def main(args):
     """
     Main entry point
     """
-    with open(args.XML_file) as f:
-        tree = ElementTree.parse(f)
+    with open(args.yaml_file) as yaml_handle:
+        config = yaml.safe_load(yaml_handle)
+
+    with open(config["xml_file"]) as xml_handle:
+        tree = ElementTree.parse(xml_handle)
 
     for node in tree.iter():
         if node.tag == "nodes":
             continue
-        uri = node.attrib.get("url")
-        if uri.endswith(".nc"):
-            print(url)
+        uri = PurePosixPath(node.attrib.get("url"))
+        if uri.match("*.nc"):
+            # This is a file rather than directory
+            print(uri)
+            mass_root = PurePosixPath(config["OUTPUT_MASS_ROOT"]).joinpath(PurePosixPath(config["OUTPUT_MASS_SUFFIX"]))
+            drs = uri.relative_to(mass_root)
+            drs_corrected  = cdds_to_drs_path(drs)
+            dest_path = Path(config["gws_root"]).joinpath(drs_corrected)
+            dest_dir = dest_path.parent
+            if not dest_dir.exists():
+                dest_dir.mkdir(parents=True)
+            print(dest_path)
+            print(f"moo get -n {uri} {dest_path}")
+            print()
+
 
 
 if __name__ == "__main__":
