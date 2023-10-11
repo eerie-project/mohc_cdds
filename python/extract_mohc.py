@@ -26,11 +26,14 @@ def run_command(command):
     try:
         cmd_out = check_output(command, stderr=STDOUT, shell=True).decode("utf-8")
     except CalledProcessError as exc:
-        msg = (
-            "Command did not complete sucessfully.\ncommand:\n{}\n"
-            "produced error:\n{}".format(command, exc.output)
-        )
-        raise RuntimeError(msg)
+        if exc.returncode == 17:
+            pass
+        else:
+            msg = (
+                "Command did not complete sucessfully.\ncommand:\n{}\n"
+                "produced error:\n{}".format(command, exc.output)
+            )
+            raise RuntimeError(msg)
 
     if isinstance(cmd_out, str):
         return cmd_out.rstrip().split("\n")
@@ -94,8 +97,8 @@ def main(args):
             dest_dir = dest_path.parent
             if not dest_dir.exists():
                 dest_dir.mkdir(parents=True)
-            print(dest_path)
-            run_command(f"moo get -L MetOffice_data_licence {uri} {dest_path}")
+            print(dest_dir)
+            run_command(f"moo get -i -L MetOffice_data_licence {uri} {dest_dir}")
             print()
 
 
